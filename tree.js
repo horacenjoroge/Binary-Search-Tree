@@ -100,5 +100,25 @@ class Tree {
             return this._find(node.right, value);
         }
     }
+    levelOrder(callback) {
+        const result = [];
+        const queue = [this.root];
+
+        const traverse = (node) => {
+            if (node) {
+                result.push(callback ? callback(node) : node.data);
+                if (node.left) {
+                    queue.push(node.left);
+                }
+                if (node.right) {
+                    queue.push(node.right);
+                }
+                traverse(queue.shift());
+            }
+        };
+
+        traverse(queue.shift());
+        return result;
+    }
 
 }
