@@ -21,4 +21,84 @@ class Tree {
 
         return newNode;
     }
+    insert(value) {
+        this.root = this._insert(this.root, value);
+    }
+
+    _insert(node, value) {
+        if (node === null) {
+            return new Node(value);
+        }
+
+        if (value < node.data) {
+            node.left = this._insert(node.left, value);
+        } else if (value > node.data) {
+            node.right = this._insert(node.right, value);
+        }
+
+        return node;
+    }
+
+    delete(value) {
+        this.root = this._delete(this.root, value);
+    }
+
+    _delete(node, value) {
+        if (node === null) {
+            return null;
+        }
+
+        if (value < node.data) {
+            node.left = this._delete(node.left, value);
+        } else if (value > node.data) {
+            node.right = this._delete(node.right, value);
+        } else {
+            // Node to be deleted found
+
+            if (node.left === null && node.right === null) {
+                // Case 1: Node has no children
+                return null;
+            } else if (node.left === null) {
+                // Case 2: Node has one child (right)
+                return node.right;
+            } else if (node.right === null) {
+                // Case 2: Node has one child (left)
+                return node.left;
+            } else {
+                // Case 3: Node has two children
+                // Find the minimum value in the right subtree
+                const minValue = this.findMinValue(node.right);
+                // Replace the current node's data with the minimum value
+                node.data = minValue;
+                // Delete the node with the minimum value in the right subtree
+                node.right = this._delete(node.right, minValue);
+            }
+        }
+
+        return node;
+    }
+
+    findMinValue(node) {
+        // Helper function to find the minimum value in a BST
+        while (node.left !== null) {
+            node = node.left;
+        }
+        return node.data;
+    }
+    find(value) {
+        return this._find(this.root, value);
+    }
+
+    _find(node, value) {
+        if (node === null || node.data === value) {
+            return node;
+        }
+
+        if (value < node.data) {
+            return this._find(node.left, value);
+        } else {
+            return this._find(node.right, value);
+        }
+    }
+
 }
