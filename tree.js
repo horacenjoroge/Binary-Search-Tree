@@ -120,5 +120,46 @@ class Tree {
         traverse(queue.shift());
         return result;
     }
+    inOrder(callback) {
+        const result = [];
+        this._inOrder(this.root, callback, result);
+        return result;
+    }
+
+    _inOrder(node, callback, result) {
+        if (node) {
+            this._inOrder(node.left, callback, result);
+            result.push(callback ? callback(node) : node.data);
+            this._inOrder(node.right, callback, result);
+        }
+    }
+
+    preOrder(callback) {
+        const result = [];
+        this._preOrder(this.root, callback, result);
+        return result;
+    }
+
+    _preOrder(node, callback, result) {
+        if (node) {
+            result.push(callback ? callback(node) : node.data);
+            this._preOrder(node.left, callback, result);
+            this._preOrder(node.right, callback, result);
+        }
+    }
+
+    postOrder(callback) {
+        const result = [];
+        this._postOrder(this.root, callback, result);
+        return result;
+    }
+
+    _postOrder(node, callback, result) {
+        if (node) {
+            this._postOrder(node.left, callback, result);
+            this._postOrder(node.right, callback, result);
+            result.push(callback ? callback(node) : node.data);
+        }
+    }
 
 }
