@@ -188,5 +188,24 @@ class Tree {
 
         return this.calculateDepth(node.parent, currentDepth + 1);
     }
+    isBalanced() {
+        return this.checkBalanced(this.root) !== -1;
+    }
 
+    checkBalanced(node) {
+        if (!node) {
+            return 0; // Height of an empty tree is 0
+        }
+
+        const leftHeight = this.checkBalanced(node.left);
+        const rightHeight = this.checkBalanced(node.right);
+
+        // If any subtree is unbalanced, propagate the unbalanced status
+        if (leftHeight === -1 || rightHeight === -1 || Math.abs(leftHeight - rightHeight) > 1) {
+            return -1;
+        }
+
+        // Return the height of the current subtree
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
 }
