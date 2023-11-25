@@ -161,7 +161,7 @@ class Tree {
             result.push(callback ? callback(node) : node.data);
         }
     }
-    
+
     height(node) {
         if (!node) {
             return -1; // Height of an empty tree is -1
@@ -171,6 +171,22 @@ class Tree {
         const rightHeight = this.height(node.right);
 
         return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    depth(node) {
+        if (!node) {
+            return -1; // Depth of a null node is -1
+        }
+
+        return this.calculateDepth(node, 0);
+    }
+
+    calculateDepth(node, currentDepth) {
+        if (!node) {
+            return currentDepth - 1;
+        }
+
+        return this.calculateDepth(node.parent, currentDepth + 1);
     }
 
 }
