@@ -208,4 +208,24 @@ class Tree {
         // Return the height of the current subtree
         return Math.max(leftHeight, rightHeight) + 1;
     }
+
+    rebalance() {
+        const valuesArray = this.inOrderTraversal();
+        this.root = Tree.buildTree(valuesArray);
+    }
+
+    inOrderTraversal() {
+        const result = [];
+        this._inOrder(this.root, result);
+        return result;
+    }
+
+    _inOrder(node, result) {
+        if (node) {
+            this._inOrder(node.left, result);
+            result.push(node.data);
+            this._inOrder(node.right, result);
+        }
+    }
+    
 }
