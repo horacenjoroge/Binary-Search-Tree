@@ -161,6 +161,7 @@ class Tree {
             result.push(callback ? callback(node) : node.data);
         }
     }
+    
     height(node) {
         if (!node) {
             return -1; // Height of an empty tree is -1
